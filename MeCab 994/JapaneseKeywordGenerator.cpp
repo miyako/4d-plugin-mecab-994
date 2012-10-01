@@ -353,7 +353,7 @@ JapaneseKeywordGenerator::keywordActionType JapaneseKeywordGenerator::keywordAct
 			//# kanto particles (posId 0->2)
 			if(   (currentPosId == 0)	//sonota, kanto
 			   || (currentPosId == 1)	//filler
-			   || (currentPosId == 2)	//kando-shi	   
+			   //|| (currentPosId == 2)	//kando-shi	   
 			   )	
 			{
 				return KEYWORD_NO_ACTION;
