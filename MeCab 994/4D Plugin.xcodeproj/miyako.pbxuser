@@ -1,7 +1,7 @@
 // !$*UTF8*$!
 {
 	089C1669FE841209C02AAC07 /* Project object */ = {
-		activeBuildConfigurationName = Development;
+		activeBuildConfigurationName = Deployment;
 		activeExecutable = D1CD816415E2F47900F7713D /* 実行可能ファイル */;
 		activeTarget = 8D01CCC60486CAD60068D4B7 /* MeCab 994 */;
 		addToTargets = (
@@ -20,7 +20,7 @@
 				PBXFileTableDataSourceColumnWidthsKey = (
 					22,
 					300,
-					415,
+					365,
 				);
 				PBXFileTableDataSourceColumnsKey = (
 					PBXExecutablesDataSource_ActiveFlagID,
@@ -33,7 +33,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					527,
+					477,
 					20,
 					48,
 					43,
@@ -72,22 +72,24 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 367193791;
-			PBXWorkspaceStateSaveDate = 367193791;
+			PBXPerProjectTemplateStateSaveDate = 370767181;
+			PBXWorkspaceStateSaveDate = 370767181;
 		};
 		perUserProjectItems = {
+			D116F52D161975510045FF9C /* PBXBookmark */ = D116F52D161975510045FF9C /* PBXBookmark */;
+			D116F538161976320045FF9C /* PBXTextBookmark */ = D116F538161976320045FF9C /* PBXTextBookmark */;
+			D116F56D161977DE0045FF9C /* PBXTextBookmark */ = D116F56D161977DE0045FF9C /* PBXTextBookmark */;
+			D116F56E161977DE0045FF9C /* PBXTextBookmark */ = D116F56E161977DE0045FF9C /* PBXTextBookmark */;
+			D166247D1619670F004BA6D9 /* PBXTextBookmark */ = D166247D1619670F004BA6D9 /* PBXTextBookmark */;
+			D166247E1619670F004BA6D9 /* PBXTextBookmark */ = D166247E1619670F004BA6D9 /* PBXTextBookmark */;
+			D16624801619670F004BA6D9 /* PBXTextBookmark */ = D16624801619670F004BA6D9 /* PBXTextBookmark */;
+			D16624A816196BB6004BA6D9 /* PBXTextBookmark */ = D16624A816196BB6004BA6D9 /* PBXTextBookmark */;
+			D16624DE161974B3004BA6D9 /* PBXTextBookmark */ = D16624DE161974B3004BA6D9 /* PBXTextBookmark */;
 			D1CD816915E2F47F00F7713D /* PBXTextBookmark */ = D1CD816915E2F47F00F7713D /* PBXTextBookmark */;
 			D1CD816A15E2F47F00F7713D /* PBXTextBookmark */ = D1CD816A15E2F47F00F7713D /* PBXTextBookmark */;
 			D1CD816B15E2F47F00F7713D /* PBXTextBookmark */ = D1CD816B15E2F47F00F7713D /* PBXTextBookmark */;
 			D1CD816C15E2F47F00F7713D /* PBXTextBookmark */ = D1CD816C15E2F47F00F7713D /* PBXTextBookmark */;
 			D1CD816D15E2F47F00F7713D /* PBXTextBookmark */ = D1CD816D15E2F47F00F7713D /* PBXTextBookmark */;
-			D1CD81C715E3071A00F7713D /* PBXTextBookmark */ = D1CD81C715E3071A00F7713D /* PBXTextBookmark */;
-			D1CD820D15E325C200F7713D /* PBXTextBookmark */ = D1CD820D15E325C200F7713D /* PBXTextBookmark */;
-			D1CD826815E3313E00F7713D /* PBXTextBookmark */ = D1CD826815E3313E00F7713D /* PBXTextBookmark */;
-			D1CD826915E3313E00F7713D /* PBXTextBookmark */ = D1CD826915E3313E00F7713D /* PBXTextBookmark */;
-			D1CD82EA15E341BA00F7713D /* PBXTextBookmark */ = D1CD82EA15E341BA00F7713D /* PBXTextBookmark */;
-			D1CD848515E3D74100F7713D /* PBXTextBookmark */ = D1CD848515E3D74100F7713D /* PBXTextBookmark */;
-			D1CD848615E3D74100F7713D /* PBXTextBookmark */ = D1CD848615E3D74100F7713D /* PBXTextBookmark */;
 		};
 		sourceControlManager = D1CD813415E2EEC400F7713D /* Source Control */;
 		userBuildSettings = {
@@ -131,10 +133,10 @@
 	};
 	18B684FE06944F8800CC6A1E /* 4DPlugin.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {593, 2119}}";
-			sepNavSelRange = "{1478, 0}";
-			sepNavVisRange = "{1412, 312}";
-			sepNavWindowFrame = "{{120, 93}, {735, 717}}";
+			sepNavIntBoundsRect = "{{0, 0}, {676, 2015}}";
+			sepNavSelRange = "{419, 0}";
+			sepNavVisRange = "{1922, 1129}";
+			sepNavWindowFrame = "{{704, 91}, {735, 717}}";
 		};
 	};
 	8D01CCC60486CAD60068D4B7 /* MeCab 994 */ = {
@@ -145,11 +147,116 @@
 			sepNavWindowFrame = "{{121, -371}, {1016, 802}}";
 		};
 	};
+	D116F52D161975510045FF9C /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 18B684FE06944F8800CC6A1E /* 4DPlugin.cpp */;
+	};
+	D116F538161976320045FF9C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = D1CD814415E2EFDD00F7713D /* JapaneseKeywordGenerator.h */;
+		name = "JapaneseKeywordGenerator.h: 54";
+		rLen = 0;
+		rLoc = 1064;
+		rType = 0;
+		vrLen = 1049;
+		vrLoc = 966;
+	};
+	D116F56D161977DE0045FF9C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = D1CD814415E2EFDD00F7713D /* JapaneseKeywordGenerator.h */;
+		name = "JapaneseKeywordGenerator.h: 54";
+		rLen = 0;
+		rLoc = 1064;
+		rType = 0;
+		vrLen = 1065;
+		vrLoc = 966;
+	};
+	D116F56E161977DE0045FF9C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 18B684FE06944F8800CC6A1E /* 4DPlugin.cpp */;
+		name = "4DPlugin.cpp: 17";
+		rLen = 0;
+		rLoc = 419;
+		rType = 0;
+		vrLen = 1129;
+		vrLoc = 1922;
+	};
 	D120937E13534DCC00A72CAA /* 4DPlugin.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {690, 382}}";
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 696}";
+		};
+	};
+	D166247D1619670F004BA6D9 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 18B684FE06944F8800CC6A1E /* 4DPlugin.cpp */;
+		name = "4DPlugin.cpp: 75";
+		rLen = 0;
+		rLoc = 1478;
+		rType = 0;
+		vrLen = 695;
+		vrLoc = 1163;
+	};
+	D166247E1619670F004BA6D9 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = D166247F1619670F004BA6D9 /* mecabFor4dImplementation.cpp */;
+		name = "mecabFor4dImplementation.cpp: 198";
+		rLen = 11;
+		rLoc = 5122;
+		rType = 0;
+		vrLen = 542;
+		vrLoc = 5053;
+	};
+	D166247F1619670F004BA6D9 /* mecabFor4dImplementation.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = mecabFor4dImplementation.cpp;
+		path = "/Users/miyako/srv-sources/keisuke.miyako/mecab/0.994/mecab_for_4d/mecabFor4dImplementation.cpp";
+		sourceTree = "<absolute>";
+	};
+	D16624801619670F004BA6D9 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = D19CC17D1353782E0004336E /* C_TEXT.h */;
+		name = "C_TEXT.h: 60";
+		rLen = 24;
+		rLoc = 1376;
+		rType = 0;
+		vrLen = 676;
+		vrLoc = 858;
+	};
+	D16624A816196BB6004BA6D9 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = D19CC17C1353782E0004336E /* C_TEXT.cpp */;
+		name = "C_TEXT.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 782;
+		vrLoc = 1892;
+	};
+	D16624DE161974B3004BA6D9 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = D1CD814315E2EFDD00F7713D /* JapaneseKeywordGenerator.cpp */;
+		name = "JapaneseKeywordGenerator.cpp: 135";
+		rLen = 0;
+		rLoc = 3171;
+		rType = 0;
+		vrLen = 707;
+		vrLoc = 0;
+	};
+	D19CC17C1353782E0004336E /* C_TEXT.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {908, 2821}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{1892, 782}";
+		};
+	};
+	D19CC17D1353782E0004336E /* C_TEXT.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {656, 923}}";
+			sepNavSelRange = "{1376, 24}";
+			sepNavVisRange = "{858, 676}";
 		};
 	};
 	D1CD813415E2EEC400F7713D /* Source Control */ = {
@@ -168,18 +275,18 @@
 	};
 	D1CD814315E2EFDD00F7713D /* JapaneseKeywordGenerator.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1405, 4485}}";
-			sepNavSelRange = "{8153, 0}";
-			sepNavVisRange = "{8404, 753}";
-			sepNavWindowFrame = "{{166, 235}, {487, 643}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1018, 5694}}";
+			sepNavSelRange = "{2434, 0}";
+			sepNavVisRange = "{228, 1393}";
+			sepNavWindowFrame = "{{391, 92}, {1077, 779}}";
 		};
 	};
 	D1CD814415E2EFDD00F7713D /* JapaneseKeywordGenerator.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1104, 923}}";
-			sepNavSelRange = "{565, 17}";
-			sepNavVisRange = "{211, 608}";
-			sepNavWindowFrame = "{{266, 84}, {1077, 779}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1216, 1079}}";
+			sepNavSelRange = "{1064, 0}";
+			sepNavVisRange = "{966, 1065}";
+			sepNavWindowFrame = "{{41, 74}, {976, 804}}";
 		};
 	};
 	D1CD816415E2F47900F7713D /* 実行可能ファイル */ = {
@@ -234,7 +341,7 @@
 		isa = PBXFileReference;
 		lastKnownFileType = wrapper.application;
 		name = 4D.app;
-		path = "/Applications/4D v12/12.4 (115208)/4D.app";
+		path = "/Applications/4D v12/12.4/4D.app";
 		sourceTree = "<absolute>";
 	};
 	D1CD816915E2F47F00F7713D /* PBXTextBookmark */ = {
@@ -286,88 +393,5 @@
 		rType = 0;
 		vrLen = 605;
 		vrLoc = 6413;
-	};
-	D1CD81B915E3065B00F7713D /* mecab.h */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.c.h;
-		name = mecab.h;
-		path = "/Users/miyako/Desktop/MeCab 994/include/mecab.h";
-		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {720, 18460}}";
-			sepNavSelRange = "{2679, 32}";
-			sepNavVisRange = "{2506, 206}";
-			sepNavWindowFrame = "{{189, 30}, {735, 717}}";
-		};
-	};
-	D1CD81C715E3071A00F7713D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = D1CD81B915E3065B00F7713D /* mecab.h */;
-		name = "mecab.h: 151";
-		rLen = 32;
-		rLoc = 2679;
-		rType = 0;
-		vrLen = 571;
-		vrLoc = 2259;
-	};
-	D1CD820D15E325C200F7713D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 18B684FE06944F8800CC6A1E /* 4DPlugin.cpp */;
-		name = "4DPlugin.cpp: 75";
-		rLen = 0;
-		rLoc = 1478;
-		rType = 0;
-		vrLen = 619;
-		vrLoc = 1338;
-	};
-	D1CD826815E3313E00F7713D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = D1CD814315E2EFDD00F7713D /* JapaneseKeywordGenerator.cpp */;
-		name = "JapaneseKeywordGenerator.cpp: 64";
-		rLen = 0;
-		rLoc = 1461;
-		rType = 0;
-		vrLen = 569;
-		vrLoc = 2890;
-	};
-	D1CD826915E3313E00F7713D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = D1CD814415E2EFDD00F7713D /* JapaneseKeywordGenerator.h */;
-		name = "JapaneseKeywordGenerator.h: 25";
-		rLen = 17;
-		rLoc = 565;
-		rType = 0;
-		vrLen = 575;
-		vrLoc = 211;
-	};
-	D1CD82EA15E341BA00F7713D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = D1CD814315E2EFDD00F7713D /* JapaneseKeywordGenerator.cpp */;
-		name = "JapaneseKeywordGenerator.cpp: 219";
-		rLen = 0;
-		rLoc = 6608;
-		rType = 0;
-		vrLen = 961;
-		vrLoc = 2732;
-	};
-	D1CD848515E3D74100F7713D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = D1CD814415E2EFDD00F7713D /* JapaneseKeywordGenerator.h */;
-		name = "JapaneseKeywordGenerator.h: 25";
-		rLen = 17;
-		rLoc = 565;
-		rType = 0;
-		vrLen = 608;
-		vrLoc = 211;
-	};
-	D1CD848615E3D74100F7713D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = D1CD814315E2EFDD00F7713D /* JapaneseKeywordGenerator.cpp */;
-		name = "JapaneseKeywordGenerator.cpp: 259";
-		rLen = 0;
-		rLoc = 8153;
-		rType = 0;
-		vrLen = 753;
-		vrLoc = 8404;
 	};
 }

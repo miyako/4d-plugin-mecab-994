@@ -72,7 +72,7 @@ void MeCab_SET_SYSTEM_DICTIONARY(sLONG_PTR *pResult, PackagePtr pParams)
 
 	Param1.fromParamAtIndex(pParams, 1);
 
-	JKG.setSystemDictionary((MECAB_DIC)Param1.getIntValue());
+	JKG.setSystemDictionary((JapaneseKeywordGenerator::dictionaryId)Param1.getIntValue());
 
 }
 

@@ -7,18 +7,90 @@
 
 #include "JapaneseKeywordGenerator.h"
 
-JapaneseKeywordGenerator::JapaneseKeywordGenerator() : mecabDictionaryId(MECAB_DIC_IPA){
+JapaneseKeywordGenerator::JapaneseKeywordGenerator(JapaneseKeywordGenerator::dictionaryId dictionaryId){
 		
-	if(this->initMecabRcPath()){
-		this->mecabModel = MeCab::createModel("--output-format-type=none");
+	mecabDictionaryId = dictionaryId;
+	
+	std::string dicdir = "--dicdir=$(rcpath)/../Resources/dic/";
+
+	switch (mecabDictionaryId) {
+		case MECAB_DIC_IPA:
+			dicdir += MECAB_DIC_DIR_IPA;
+			break;				
+		case MECAB_DIC_JUMAN:
+			dicdir += MECAB_DIC_DIR_JUMAN;
+			break;
+		case MECAB_DIC_NAIST:
+			dicdir += MECAB_DIC_DIR_NAIST;
+			break;
+		case MECAB_DIC_UNI:
+			dicdir += MECAB_DIC_DIR_UNI;
+			break;	
+	}	
+	
+	//construct the command-line-style argument to initialise mecab model
+	rcfile = "--output-format-type=none\n--rcfile=";
+	
+#ifdef _WIN32
+	
+	wchar_t	libmecabPath[ _MAX_PATH ] = {0};
+	wchar_t	mecabrcPath[ _MAX_PATH ] = {0};	
+	wchar_t	fDrive[_MAX_DRIVE], fDir[_MAX_DIR], fName[_MAX_FNAME], fExt[_MAX_EXT];
+	
+	HMODULE libmecab = GetModuleHandleW(THIS_DLL_NAME);
+	
+	if(libmecab){
+		GetModuleFileNameW(libmecab, libmecabPath, _MAX_PATH);
+		_wsplitpath_s(libmecabPath, fDrive, fDir, fName, fExt);
+		_wmakepath_s(mecabrcPath, fDrive, fDir, L"mecabrc", NULL );
+		
+		//convert wide characters to utf-8		
+		int len = WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, mecabrcPath, -1, NULL, 0, NULL, NULL);
+		
+		if(len){
+			std::vector<uint8_t> buf(len);
+			if(WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, mecabrcPath, -1, (LPSTR)&buf[0], len, NULL, NULL)){
+				rcfile += (const char *)&buf[0];
+			}
+		}
 	}
+	
+#else	
+	
+	NSBundle *libmecab = [NSBundle bundleWithIdentifier:THIS_BUNDLE_ID];
+	
+	if(libmecab){
+		NSString *mecabrcPath = [[[libmecab executablePath]stringByDeletingLastPathComponent]stringByAppendingPathComponent:@"mecabrc"];
+		rcfile += (const char *)[mecabrcPath UTF8String];
+	}
+
+#endif	
+	
+	//we have modified file param.cpp (192) to use 0x0A as delimeter instead of isspace() 
+	rcfile += "\n";
+	
+	meCabModel = MeCab::createModel((rcfile + dicdir).c_str());
+	
+	if(meCabModel){
 		
+		meCabTagger = meCabModel->createTagger();
+		
+	}
+	
 }
 
 JapaneseKeywordGenerator::~JapaneseKeywordGenerator(){ 
 	
-	if(mecabModel)
-		delete mecabModel;
+	if(meCabModel){
+		
+		if(meCabTagger){
+			
+			delete meCabTagger;
+			
+		}
+		
+		delete meCabModel;
+	}
 
 }
 
@@ -26,18 +98,16 @@ BOOL JapaneseKeywordGenerator::setSystemDictionary(CUTF8String *dictionaryName){
 	
 	BOOL success = FALSE;
 	
-#if VERSIONMAC
-	CUTF8String arg = (const uint8_t *)"--output-format-type=none --dicdir=$(rcpath)/../resources/dic/";
-#else
-	CUTF8String arg = (const uint8_t *)"--output-format-type=none --dicdir=$(rcpath)\\..\\resources\\dic\\";
-#endif
-	arg += dictionaryName->c_str();
+	std::string dicdir = "--dicdir=$(rcpath)/../Resources/dic/";
+
+	dicdir += (const char *)dictionaryName->c_str();
 	
-	if(mecabModel){
+	if(meCabModel){
 		//swap current model with new model
-		MeCab::Model *another_model = MeCab::createModel((const char *)arg.c_str());
+		
+		MeCab::Model *another_model = MeCab::createModel((rcfile + dicdir).c_str());
 		if(another_model){
-			this->mecabModel->swap(another_model);
+			this->meCabModel->swap(another_model);
 			success = TRUE;
 		}
 		
@@ -47,7 +117,7 @@ BOOL JapaneseKeywordGenerator::setSystemDictionary(CUTF8String *dictionaryName){
 
 }
 
-void JapaneseKeywordGenerator::setSystemDictionary(MECAB_DIC dictionaryId){
+void JapaneseKeywordGenerator::setSystemDictionary(JapaneseKeywordGenerator::dictionaryId dictionaryId){
 
 	CUTF8String dictionaryDirName;
 	
@@ -91,240 +161,269 @@ void JapaneseKeywordGenerator::getNodes(CUTF8String *sourceText, std::vector<CUT
 	posIds->clear();
 	posIds->resize(1);	
 	
-	if(this->mecabModel){
-		MeCab::Tagger *tagger = this->mecabModel->createTagger();
-		if(tagger){
-			MeCab::Lattice *lattice = this->mecabModel->createLattice();
-			if(lattice){
-				lattice->set_sentence((const char *)sourceText->c_str());
-				
-				if(tagger->parse(lattice)){
-					
-					const MeCab::Node* node = lattice->bos_node();
-					
-					while(node){
-						
-						switch(node->stat)
-						{
-							case MECAB_BOS_NODE:
-								break;
-							case MECAB_EOS_NODE:
-								break;
-							default:
-								surface = CUTF8String((const uint8_t *)node->surface, node->length);
-								feature = CUTF8String((const uint8_t *)node->feature);
-								posId = node->posid;
-								surfaces->push_back(surface);
-								features->push_back(feature);
-								posIds->push_back(posId);
-								break;
-						}
-						node = node->next;
-					}				
-					
-				}
-				delete lattice;
-			}
-			delete tagger;
-		}
+	if(sourceText->size()){
 		
-	}	
+		if(meCabModel){
+			if(meCabTagger){
+				MeCab::Lattice *lattice = meCabModel->createLattice();
+				if(lattice){
+					lattice->set_sentence((const char *)sourceText->c_str());
+					
+					if(meCabTagger->parse(lattice)){
+						
+						const MeCab::Node* node = lattice->bos_node();
+						
+						while(node){
+							
+							switch(node->stat)
+							{
+								case MECAB_BOS_NODE:
+									break;
+								case MECAB_EOS_NODE:
+									break;
+								default:
+									surface = CUTF8String((const uint8_t *)node->surface, node->length);
+									feature = CUTF8String((const uint8_t *)node->feature);
+									posId = node->posid;
+									surfaces->push_back(surface);
+									features->push_back(feature);
+									posIds->push_back(posId);
+									break;
+							}
+							node = node->next;
+						}				
+						
+					}
+					delete lattice;
+				}
+
+			}
+			
+		}	
+		
+	}
 	
 }
 
 void JapaneseKeywordGenerator::getKeywords(CUTF8String *sourceText, std::vector<CUTF8String> *keywords){
 	
-	CUTF8String keyword, leftKeyword;
-	unsigned short leftPosId = 0;
+	CUTF8String keyword, oldKeyword;
 	
 	keywords->clear();
 	keywords->resize(1);
 	
-	if(this->mecabModel){
-		MeCab::Tagger *tagger = this->mecabModel->createTagger();
-		if(tagger){
-			MeCab::Lattice *lattice = this->mecabModel->createLattice();
-			if(lattice){
-				lattice->set_sentence((const char *)sourceText->c_str());
-				
-				if(tagger->parse(lattice)){
-				
-					const MeCab::Node* node = lattice->bos_node();
-					
-					while(node){
-						
-						switch(node->stat){
-							case MECAB_BOS_NODE:
-								break;
-							case MECAB_EOS_NODE:
-								break;
-							default:	
-								
-								keyword = CUTF8String((const uint8_t *)node->surface, node->length);
-								
-								BOOL shouldSkip = FALSE;
-								BOOL shouldReplace = FALSE;
-								
-								switch (this->mecabDictionaryId){
-									case MECAB_DIC_IPA:
-									case MECAB_DIC_NAIST:	
-										
-										//http://www.unixuser.org/~euske/doc/postag/index.html#chasen
-										
-										//#1 ignore punctuation (kigou)
-										if((node->posid >= 3) && (node->posid <= 9)){
-											shouldSkip = TRUE;
-											break;
-										}
-										
-										//#2 append particle to preceeding verb/adjective
-										if(((leftPosId == 18) || (leftPosId == 25) || (leftPosId == 31) || (leftPosId == 32) || (leftPosId == 33) || (leftPosId == 54) || (leftPosId == 62) || (leftPosId == 65))
-										   && ((node->posid == 18) || (node->posid == 22) || (node->posid == 25) || (node->posid == 32) || (node->posid == 54) || (node->posid == 62) || (node->posid == 65))){
-											keyword = leftKeyword + keyword;
-											shouldReplace = TRUE;
-											break;
-										}
-										
-										//#3 append particle to preceeding noun
-										if((((leftPosId >= 36) && (leftPosId <= 39)) || (leftPosId == 41) || ((leftPosId >= 46) && (leftPosId <= 48)) || ((leftPosId >= 50) && (leftPosId <= 53)) || (leftPosId == 58))
-										&& (((node->posid >= 50) && (node->posid <= 53)) || (node->posid == 56) || (node->posid == 58))){
-											keyword = leftKeyword + keyword;
-											shouldReplace = TRUE;
-											break;
-										}											
-
-										//#4 append verb/noun/adjective to prefix
-										if(((leftPosId >= 27) && (leftPosId <= 30))
-										   && ((node->posid == 10) || (node->posid == 31) || (node->posid == 36) || (node->posid == 38) || (node->posid == 48))){
-											keyword = leftKeyword + keyword;
-											shouldReplace = TRUE;
-											break;
-										}
-										
-										//#5 concatenate common nouns
-										if(((leftPosId == 38) || (leftPosId == 41))
-										   && ((node->posid == 38) || (node->posid == 41))){
-											keyword = leftKeyword + keyword;
-											shouldReplace = TRUE;
-											break;
-										}											
-										
-										//#6 ignore certain particles
-										if(((node->posid >= 13) && (node->posid <= 17)) || ((node->posid >= 20) && (node->posid <= 25)) || (node->posid == 55) || (node->posid == 57) || (node->posid == 63)){
-											shouldSkip = TRUE;
-											break;
-										}										
-										
-										break;
-									case MECAB_DIC_JUMAN:
-										
-										//http://www.unixuser.org/~euske/doc/postag/index.html#juman
-										
-										//#1 ignore punctuation (tokushu)
-										if((node->posid >= 23) && (node->posid <= 28)){
-											shouldSkip = TRUE;
-											break;
-										}
-										
-										//#2 append particle to preceeding verb/adjective
-										if(((leftPosId == 1) || ((leftPosId >= 15) && (leftPosId <= 18)) || (leftPosId == 22))
-										   && (((node->posid >= 15) && (node->posid <= 18)) || (node->posid == 6) || (node->posid == 9) || (node->posid == 29))){
-											keyword = leftKeyword + keyword;
-											shouldReplace = TRUE;
-											break;
-										}										
-										
-										//#3 append particle to preceeding noun
-										if(((leftPosId == 31) || (leftPosId == 33) || (leftPosId == 34) || ((leftPosId >= 36) && (leftPosId <= 39)) || ((leftPosId >= 19) && (leftPosId <= 21)))
-										   && ((node->posid == 15) ||(node->posid == 16) || (node->posid == 19) || (node->posid == 20))){
-											keyword = leftKeyword + keyword;
-											shouldReplace = TRUE;
-											break;
-										}
-										
-										//#4 append verb/noun/adjective to prefix
-										if(((leftPosId >= 11) && (leftPosId <= 14))
-										   && ((node->posid == 1) || (node->posid == 22) || (node->posid == 31) || ((node->posid >= 33) && (node->posid <= 39)))){
-											keyword = leftKeyword + keyword;
-											shouldReplace = TRUE;
-											break;
-										}
-
-										//#5 concatenate common nouns
-										if(((leftPosId == 33) || (leftPosId == 39))
-										   && ((node->posid == 33) || (node->posid == 39))){
-											keyword = leftKeyword + keyword;
-											shouldReplace = TRUE;
-											break;
-										}
-										
-										//#6 ignore certain particles (kakujyoshi, setsuzoku-jyoshi, fukujyoshi, keishiki-meishi)
-										if((node->posid == 5) || (node->posid == 7) || (node->posid == 8) || (node->posid == 21) || (node->posid == 29) || (node->posid == 32) || (node->posid == 40)){
-											shouldSkip = TRUE;
-											break;
-										}
-										break;
-									case MECAB_DIC_UNI:
-										//this dictionary has no pos-id.def
-										break;											
-								}
-								
-								if(shouldReplace){
-									std::vector<CUTF8String>::iterator f;
-									f = find(keywords->begin(),keywords->end(), leftKeyword);
-									if(f != keywords->end()){
-										keywords->erase(f);
-									}								
-								}
-								
-								if(!shouldSkip){
-									//#check if the word is already in list
-									if(find(keywords->begin(),keywords->end(), keyword) == keywords->end()){	
-										keywords->push_back(keyword);
-									}								
-								}
-								break;
-						}
-						leftPosId = node->posid;
-						leftKeyword = keyword;
-						node = node->next;
-					}					
-				
-				}
-				delete lattice;
-			}
-			delete tagger;
-		}
-
-	}
+	if(sourceText->size()){
 	
+		if(meCabModel){
+			if(meCabTagger){
+				MeCab::Lattice *lattice = meCabModel->createLattice();
+				if(lattice){
+					lattice->set_sentence((const char *)sourceText->c_str());
+					
+					if(meCabTagger->parse(lattice)){
+					
+						size_t newPos = 0, oldLen = 0;
+						size_t newLen = 0, oldPos = 0;
+						
+						unsigned short oldPosId = 0;
+						
+						const MeCab::Node* node = lattice->bos_node();
+						
+						while(node){
+							
+							BOOL shouldAdd = FALSE;
+							BOOL shouldReplace = FALSE;
+							
+							switch(node->stat){
+								case MECAB_BOS_NODE:
+									break;
+								case MECAB_EOS_NODE:
+									break;
+								default:	
+									
+									newPos = (const uint8_t *)node->surface - sourceText->c_str();
+									newLen = node->length;
+									
+									keyword = CUTF8String((const uint8_t *)node->surface, node->length);
+									
+									JapaneseKeywordGenerator::keywordActionType keywordActionType = KEYWORD_ADD;
+									
+									if((oldPos + oldLen) != newPos)
+									{
+										oldPosId = 0;
+									}
+									
+									keywordActionType = this->keywordActionTypeForPosIdPair(oldPosId, node->posid, this->mecabDictionaryId);
+									
+									switch (keywordActionType) {
+											
+										case KEYWORD_NO_ACTION:
+											break;
+											
+										case KEYWORD_ADD:
+											shouldAdd = TRUE;
+											break;
+											
+										case KEYWORD_REPLACE:
+											
+											newPos = oldPos;
+											newLen += oldLen;
+
+											shouldReplace = TRUE;
+											shouldAdd = TRUE;
+											break;												
+									}
+									
+									if(shouldReplace){
+										std::vector<CUTF8String>::iterator f;
+										f = find(keywords->begin(),keywords->end(), oldKeyword);
+										if(f != keywords->end()){
+											keywords->erase(f);
+										}								
+									}
+									
+									if(shouldAdd){
+										if(find(keywords->begin(),keywords->end(), keyword) == keywords->end()){	
+											keywords->push_back(keyword);
+										}								
+									}
+									break;
+							}
+							
+							oldPosId = node->posid;
+							oldPos = newPos;
+							oldLen = newLen;
+							oldKeyword = keyword;
+							
+							node = node->next;
+						}					
+					
+					}
+					delete lattice;
+				}
+
+			}
+
+		}
+		
+	}
+
 }
 
-BOOL JapaneseKeywordGenerator::initMecabRcPath(){
+//this is where we implement custom rules to create useful keywords 
+JapaneseKeywordGenerator::keywordActionType JapaneseKeywordGenerator::keywordActionTypeForPosIdPair(unsigned short previousPosId, unsigned short currentPosId, JapaneseKeywordGenerator::dictionaryId dictionaryId){
 	
-	BOOL success = FALSE;
+	//custom keyword rule begins here;
+	//mecab will break sentence to part-of-text, but some elements don't mean much as keywords.
+	//we reject some non-word part-of-text,
+	//concatenate words that makes more sense as a single phrase.
+	//we use the posId returned by mecab to determine the nature of the word.
 	
-#if VERSIONMAC	
-	NSBundle *libmecab = [NSBundle bundleWithIdentifier:THIS_BUNDLE_ID];
-	if(libmecab){
-		NSString *mecabrcPath = [[[libmecab executablePath]stringByDeletingLastPathComponent]stringByAppendingPathComponent:@"mecabrc"];
-		setenv("MECABRC",(const char *)[mecabrcPath UTF8String], 1);
-		success = TRUE;
+	//for description of posId used in naist-jdic see
+	//http://www.unixuser.org/~euske/doc/postag/index.html#chasen
+	//or the pos-id.def file in source (euc-jp encoding text)
+	
+	switch (dictionaryId) {
+		case MECAB_DIC_NAIST:
+			
+			//# concatenate alphabet (posId 3)
+			if((previousPosId == 3) && (currentPosId == 3))
+			{
+				return KEYWORD_REPLACE;
+			}	
+			
+			//# jyoshi particles (posId 13->24)
+			if(   (currentPosId == 13)	//jyoshi, kaku-jyoshi, ippan
+			   || (currentPosId == 14)	//jyoshi, kaku-jyoshi, in-yo
+			   || (currentPosId == 15)	//jyoshi, kaku-jyoshi, ren-go
+			   || (currentPosId == 16)	//jyoshi, kei-jyoshi
+			   || (currentPosId == 17)	//jyoshi, shu-jyoshi
+			   || (currentPosId == 18)	//jyoshi, setsuzoku-jyoshi
+			   || (currentPosId == 19)	//jyoshi, tokushu
+			   || (currentPosId == 20)	//jyoshi, fukushi-ka
+			   || (currentPosId == 21)	//jyoshi, fuku-jyoshi
+			   || (currentPosId == 22)	//jyoshi, fuku-jyoshi, heiritsu-jyoshi, shu-jyoshi
+			   || (currentPosId == 23)	//jyoshi, heiritsu-jyoshi
+			   || (currentPosId == 24)	//jyoshi, rentai-ka	   
+			   )	
+			{
+				return KEYWORD_NO_ACTION;
+			}
+			
+			//# kanto particles (posId 0->2)
+			if(   (currentPosId == 0)	//sonota, kanto
+			   || (currentPosId == 1)	//filler
+			   || (currentPosId == 2)	//kando-shi	   
+			   )	
+			{
+				return KEYWORD_NO_ACTION;
+			}
+			
+			//# kigou particles (posId 3->9)
+			if(//   (currentPosId == 3)	//kigou, alphabet
+			   (currentPosId == 4)	//kigou, ippan
+			   || (currentPosId == 5)	//kigou, kakko
+			   || (currentPosId == 6)	//kigou, kakko-toji
+			   || (currentPosId == 7)	//kigou, ku-ten
+			   || (currentPosId == 8)	//kigou, ku-haku
+			   || (currentPosId == 9)	//kigou, tou-ten  
+			   )	
+			{
+				return KEYWORD_NO_ACTION;
+			}			
+			
+			break;
+		case MECAB_DIC_IPA:
+			break;
+		case MECAB_DIC_JUMAN:
+			break;	
+		case MECAB_DIC_UNI:
+			break;			
 	}
-#else
-	wchar_t	libmecabPath[ _MAX_PATH ] = {0};
-	wchar_t	mecabrcPath[ _MAX_PATH ] = {0};
-	wchar_t	fDrive[ _MAX_DRIVE ], fDir[ _MAX_DIR ], fName[ _MAX_FNAME ], fExt[ _MAX_EXT ];
 	
-	HMODULE libmecab = GetModuleHandleW(THIS_DLL_NAME);
+	/*
+	 //# ignore punctuation, but not alphabet (posId 4 to 9)
+	 if((currentPosId >= 4) && (currentPosId <= 9)){
+	 return KEYWORD_NO_ACTION;
+	 }
+	 
+	 //# concatenate numbers (posId 48 can be digits or kanji)
+	 //note that this will NOT recognize commas or decimal points
+	 if((previousPosId == 48) && (currentPosId == 48)){
+	 return KEYWORD_REPLACE;
+	 }
+	 
+	 //# append particle to preceeding verb or adjective
+	 //we do this to register verbs and adjectives as keywords in their complete form  
+	 if(((previousPosId == 18) || (previousPosId == 25) || (previousPosId == 31) || (previousPosId == 32) || (previousPosId == 33) || (previousPosId == 54) || (previousPosId == 62) || (previousPosId == 65))
+	 && ((currentPosId == 18) || (currentPosId == 22) || (currentPosId == 25) || (currentPosId == 32) || (currentPosId == 54) || (currentPosId == 62) || (currentPosId == 65))){
+	 return KEYWORD_REPLACE;
+	 }
+	 
+	 //# append particle to preceeding noun
+	 //same as above; particles have no meaning by themselves
+	 //we sould either drop them or attach them to the previous phrase
+	 if((((previousPosId >= 36) && (previousPosId <= 39)) || (previousPosId == 41) || ((previousPosId >= 46) && (previousPosId <= 48)) || ((previousPosId >= 50) && (previousPosId <= 53)) || (previousPosId == 58))
+	 && (((currentPosId >= 50) && (currentPosId <= 53)) || (currentPosId == 56) || (currentPosId == 58))){
+	 return KEYWORD_REPLACE;
+	 }
+	 
+	 //# append verb/noun/adjective to prefix
+	 //reverse of what we did above
+	 //prefixes have no meaning by themselves
+	 if(((previousPosId >= 27) && (previousPosId <= 30))
+	 && ((currentPosId == 10) || (currentPosId == 31) || (currentPosId == 36) || (currentPosId == 38) || (currentPosId == 48))){
+	 return KEYWORD_REPLACE;
+	 }
+	 
+	 //# concatenate consecutive common nouns (as opposes to names which should not be merged)
+	 if(((previousPosId == 38) || (previousPosId == 41))
+	 && ((currentPosId == 38) || (currentPosId == 41))){
+	 return KEYWORD_REPLACE;
+	 }
+	 */
+
 	
-	if(libmecab){
-		GetModuleFileNameW(libmecab, libmecabPath, _MAX_PATH);
-		_wsplitpath_s( libmecabPath, fDrive, fDir, fName, fExt );
-		_wmakepath_s( mecabrcPath, fDrive, fDir, L"mecabrc", NULL );
-		_wputenv_s(L"MECABRC", mecabrcPath);
-		success = TRUE;
-	}
-#endif
-	return success;
+	return KEYWORD_ADD;
+	
 }
