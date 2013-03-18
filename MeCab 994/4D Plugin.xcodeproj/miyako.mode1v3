@@ -254,7 +254,7 @@
 						<dict>
 							<key>PBXSmartGroupTreeModuleColumnWidthsKey</key>
 							<array>
-								<real>201</real>
+								<real>186</real>
 							</array>
 							<key>PBXSmartGroupTreeModuleColumnsKey_v4</key>
 							<array>
@@ -278,13 +278,11 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>2</integer>
-									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {201, 632}}</string>
+							<string>{{0, 0}, {186, 528}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -296,14 +294,14 @@
 					<key>GeometryConfiguration</key>
 					<dict>
 						<key>Frame</key>
-						<string>{{0, 0}, {203, 650}}</string>
+						<string>{{0, 0}, {203, 546}}</string>
 						<key>GroupTreeTableConfiguration</key>
 						<array>
 							<string>MainColumn</string>
-							<real>201</real>
+							<real>186</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>475 187 909 691 0 0 1440 878 </string>
+						<string>475 291 642 587 0 0 1440 878 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -331,7 +329,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>D15739D8161986F200890EFD</string>
+										<string>D164187916F7438800377EA3</string>
 										<key>history</key>
 										<array>
 											<string>D1CD816915E2F47F00F7713D</string>
@@ -344,7 +342,7 @@
 											<string>D16624801619670F004BA6D9</string>
 											<string>D16624A816196BB6004BA6D9</string>
 											<string>D16624DE161974B3004BA6D9</string>
-											<string>D116F57B16197AC80045FF9C</string>
+											<string>D14755EB16A7D6ED0071B77D</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -356,14 +354,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {701, 404}}</string>
+								<string>{{0, 0}, {434, 284}}</string>
 								<key>RubberWindowFrame</key>
-								<string>475 187 909 691 0 0 1440 878 </string>
+								<string>475 291 642 587 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>404pt</string>
+							<string>284pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -376,18 +374,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 409}, {701, 241}}</string>
+								<string>{{0, 289}, {434, 257}}</string>
 								<key>RubberWindowFrame</key>
-								<string>475 187 909 691 0 0 1440 878 </string>
+								<string>475 291 642 587 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>241pt</string>
+							<string>257pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
-					<string>701pt</string>
+					<string>434pt</string>
 				</dict>
 			</array>
 			<key>Name</key>
@@ -402,9 +400,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>D15739D9161986F200890EFD</string>
+				<string>D164187A16F7438800377EA3</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>D15739DA161986F200890EFD</string>
+				<string>D164187B16F7438800377EA3</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -546,7 +544,7 @@
 		<string>/Users/miyako/github-miyako/4d-plugin-mecab-994/MeCab 994/4D Plugin.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>475 187 909 691 0 0 1440 878 </string>
+	<string>475 291 642 587 0 0 1440 878 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -623,7 +621,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>D1CD813215E2EEC400F7713D</string>
-				<string>D15739DB161986F200890EFD</string>
+				<string>D164187C16F7438800377EA3</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -783,7 +781,7 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CDD528C0622207200134675</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>mecab.h</string>
+										<string></string>
 										<key>StatusBarVisibility</key>
 										<true/>
 									</dict>
@@ -841,8 +839,8 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D57069F1CE1000CFCEE</string>
-				<string>D1CD81D915E3071A00F7713D</string>
-				<string>D1CD81DA15E3071A00F7713D</string>
+				<string>D14755EF16A7D6ED0071B77D</string>
+				<string>D14755F016A7D6ED0071B77D</string>
 				<string>1CDD528C0622207200134675</string>
 				<string>1CD0528E0623707200166675</string>
 			</array>
@@ -851,7 +849,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C530D57069F1CE1000CFCEE</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>Identifier</key>

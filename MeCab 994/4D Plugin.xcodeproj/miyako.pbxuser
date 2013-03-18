@@ -33,7 +33,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					477,
+					210,
 					20,
 					48,
 					43,
@@ -41,6 +41,42 @@
 					20,
 				);
 				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFindDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFindDataSource_LocationID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					200,
+					491,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFindDataSource_MessageID,
+					PBXFindDataSource_LocationID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.XCSCMDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					20,
+					453,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_SCM_ColumnID,
 					PBXFileDataSource_FiletypeID,
 					PBXFileDataSource_Filename_ColumnID,
 					PBXFileDataSource_Built_ColumnID,
@@ -72,12 +108,12 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 370771691;
-			PBXWorkspaceStateSaveDate = 370771691;
+			PBXPerProjectTemplateStateSaveDate = 385303418;
+			PBXWorkspaceStateSaveDate = 385303418;
 		};
 		perUserProjectItems = {
-			D116F57B16197AC80045FF9C /* PBXTextBookmark */ = D116F57B16197AC80045FF9C /* PBXTextBookmark */;
-			D15739D8161986F200890EFD /* PBXTextBookmark */ = D15739D8161986F200890EFD /* PBXTextBookmark */;
+			D14755EB16A7D6ED0071B77D /* PBXTextBookmark */ = D14755EB16A7D6ED0071B77D /* PBXTextBookmark */;
+			D164187916F7438800377EA3 /* PBXTextBookmark */ = D164187916F7438800377EA3 /* PBXTextBookmark */;
 			D166247D1619670F004BA6D9 /* PBXTextBookmark */ = D166247D1619670F004BA6D9 /* PBXTextBookmark */;
 			D166247E1619670F004BA6D9 /* PBXTextBookmark */ = D166247E1619670F004BA6D9 /* PBXTextBookmark */;
 			D16624801619670F004BA6D9 /* PBXTextBookmark */ = D16624801619670F004BA6D9 /* PBXTextBookmark */;
@@ -145,16 +181,6 @@
 			sepNavWindowFrame = "{{121, -371}, {1016, 802}}";
 		};
 	};
-	D116F57B16197AC80045FF9C /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = D1CD814415E2EFDD00F7713D /* JapaneseKeywordGenerator.h */;
-		name = "JapaneseKeywordGenerator.h: 54";
-		rLen = 0;
-		rLoc = 1064;
-		rType = 0;
-		vrLen = 1065;
-		vrLoc = 966;
-	};
 	D120937E13534DCC00A72CAA /* 4DPlugin.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {690, 382}}";
@@ -162,14 +188,24 @@
 			sepNavVisRange = "{0, 696}";
 		};
 	};
-	D15739D8161986F200890EFD /* PBXTextBookmark */ = {
+	D14755EB16A7D6ED0071B77D /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = D1CD814415E2EFDD00F7713D /* JapaneseKeywordGenerator.h */;
 		name = "JapaneseKeywordGenerator.h: 54";
 		rLen = 0;
 		rLoc = 1064;
 		rType = 0;
-		vrLen = 1046;
+		vrLen = 1044;
+		vrLoc = 966;
+	};
+	D164187916F7438800377EA3 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = D1CD814415E2EFDD00F7713D /* JapaneseKeywordGenerator.h */;
+		name = "JapaneseKeywordGenerator.h: 54";
+		rLen = 0;
+		rLoc = 1064;
+		rType = 0;
+		vrLen = 857;
 		vrLoc = 966;
 	};
 	D166247D1619670F004BA6D9 /* PBXTextBookmark */ = {
@@ -267,9 +303,9 @@
 	};
 	D1CD814415E2EFDD00F7713D /* JapaneseKeywordGenerator.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1216, 1053}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1216, 1040}}";
 			sepNavSelRange = "{1064, 0}";
-			sepNavVisRange = "{966, 1046}";
+			sepNavVisRange = "{966, 857}";
 			sepNavWindowFrame = "{{41, 74}, {976, 804}}";
 		};
 	};
